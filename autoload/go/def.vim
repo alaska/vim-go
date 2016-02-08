@@ -32,7 +32,8 @@ function! go#def#Jump(...)
 	let old_gopath = $GOPATH
 	let $GOPATH = go#path#Detect()
 
-	let command = bin_path . " -t -i " . shellescape(arg)
+    let fname = fnamemodify(expand("%"), ':p:gs?\\?/?')
+    let command = bin_path . " -f=" . shellescape(fname) . " -t -i " . shellescape(arg)
 
 	" get output of godef
 	let out=s:system(command, join(getbufline(bufnr('%'), 1, '$'), go#util#LineEnding()))
